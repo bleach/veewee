@@ -32,6 +32,7 @@ module Veewee
         :cpu_count => '1', :memory_size=> '256', 
         :disk_size => '10240', :disk_format => 'VDI', :hostiocache => 'off' ,
         :os_type_id => 'Ubuntu',
+        :pae => false, :io_apic_enabled => false,
         :iso_file => "ubuntu-10.10-server-i386.iso", :iso_src => "", :iso_md5 => "", :iso_download_timeout => 1000,
         :boot_wait => "10", :boot_cmd_sequence => [ "boot"],
         :kickstart_port => "7122", :kickstart_ip => self.local_ip, :kickstart_timeout => 10000,:kickstart_file => "preseed.cfg",
@@ -511,6 +512,8 @@ module Veewee
       vm.memory_size=@definition[:memory_size].to_i
       vm.os_type_id=@definition[:os_type_id]
       vm.cpu_count=@definition[:cpu_count].to_i
+      vm.cpu.pae=@definition[:pae]
+      vm.bios.io_apic_enabled=@definition[:io_apic_enabled]
       vm.name=boxname
 
       puts "Creating vm #{vm.name} : #{vm.memory_size}M - #{vm.cpu_count} CPU - #{vm.os_type_id}"
